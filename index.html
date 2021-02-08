@@ -32,7 +32,6 @@
 	<link rel="stylesheet" href="css/jquery.fancybox.min.css">
 	<link rel="stylesheet" href="css/all.css">
 
-
 </head>
 
 <body data-spy="scroll" data-target=".navbar" data-offset="50" id="home">
@@ -515,13 +514,12 @@
 			<div class="row   d-flex align-items-center justify-content-center">
 				<div class="col-xl-8 rsvp-col">
 					<!-- Form itself -->
-					<form name=" sentMessage" id="contactForm" novalidate>
+					<form novalidate>
 						<div class="row">
 							<div class="col-xl-6 col-md-6 col-6">
 								<div class="control-group">
 									<div class="controls">
-										<input type="text" class="form-control" placeholder="请输入姓名" id="name" required
-											data-validation-required-message="请输入您的姓名" />
+										<input type="text" class="form-control" placeholder="请输入姓名" id="name" required />
 										<p class="help-block"></p>
 									</div>
 								</div>
@@ -529,8 +527,7 @@
 							<div class="col-xl-6 col-md-6 col-6">
 								<div class="control-group">
 									<div class="controls">
-										<input type="number" class="form-control" placeholder="请输入手机号码" id="phone" required
-											data-validation-required-message="请输入手机号码" />
+										<input type="number" class="form-control" placeholder="请输入手机号码" id="phone" required />
 									</div>
 								</div>
 							</div>
@@ -538,15 +535,12 @@
 								<div class="control-group">
 									<div class="controls">
 										<textarea rows="10" cols="100" class="form-control" placeholder="请输入您对新人的祝福" id="message" required
-											data-validation-required-message="请输入您对新人的祝福" minlength="5"
-											data-validation-minlength-message="至少5个字符" maxlength="999"
 											style="resize:none"></textarea>
 									</div>
 								</div>
 							</div>
 							<div class="col-xl-12 col-md-12 col-12 send-button">
-								<!-- For success/fail messages -->
-								<button type="submit" class="btn btn-primary">确定</button>
+								<button class="btn btn-primary" id="submit">确定</button>
 							</div>
 						</div>
 					</form>
@@ -564,10 +558,10 @@
 				<div class="col-xl-12 thank-section">
 					<div class="text-1">
 						<h1 class="">thank you</h1>
-						<h4>for being with us</h4>
+						<h4>期待您的光临</h4>
 					</div>
 					<div class="text-2">
-						<h2>Save the date</h2>
+						<h2>Start the date</h2>
 						<li>2021/05/20</li>
 					</div>
 				</div>
@@ -576,6 +570,17 @@
 	</section>
 
 
+	<div class="music">
+		<img src="./img/music.png" alt="">
+		<audio preload autoplay id="audio">
+			<source src="./audio.mp3" type="audio/mp3">
+				您的浏览器不支持 audio 元素。
+			</audio>
+	</div>
+
+
+
+	
 
 
 	<!-- Optional JavaScript -->
@@ -602,7 +607,7 @@
         // 将地址解析结果显示在地图上，并调整地图视野
         myGeo.getPoint('四川省广元市苍溪县国际大酒店', function(point){
             if(point){
-							map.centerAndZoom(point, 16);
+							map.centerAndZoom(point, 300);
 							// 创建图标
 							var myIcon = new BMap.Icon("./img/favicon.png", new BMap.Size(32, 32));
 							// 创建Marker标注，使用图标
@@ -635,7 +640,7 @@
 		function loadScript() {  
 			var script = document.createElement("script");  
 			script.src = "http://api.map.baidu.com/api?v=2.0&ak=uRbq1N0CONshk5O4g6xTNZ2GoxuXX4uN&callback=initialize";
-			document.body.appendChild(script);  
+			document.body.appendChild(script); 
 		}  
 		window.onload = loadScript;  
 		</script> 
@@ -683,6 +688,48 @@
 					items: 5
 				}
 			}
+		})
+
+		function play(){
+			var audio = $('#audio')[0];
+			if(audio.paused){
+				audio.play();
+				$('.music').addClass('rotate');
+			}else {
+				audio.pause();
+				$('.music').removeClass('rotate');
+			}
+		}
+		// 音乐播放
+		$('.music').on('click',play);
+
+		$('#submit').on('click',function(){
+			var name = $('#name').val();			
+			var phone = $('#phone').val();			
+			var message = $('#message').val();	
+			if(!name){
+				return alert('请输入姓名');
+			}
+			if(!phone){
+				return alert('请输入手机号码');
+			}
+			if(!message){
+				return alert('请输入祝福语');
+			}
+			var postData = {
+				name:name,
+				phone:phone,
+				message:message,
+			}		
+			$.ajax({
+				method:'POST',
+				url:'http://www.nevergiveupt.top/api/v1/web/wedding',
+				data:postData,
+				success:function(res){
+					console.log(res)
+				}
+			})
+			console.log(postData)
 		})
 	</script>
 	<!--owl carasol end-->

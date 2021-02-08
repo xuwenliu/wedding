@@ -5,6 +5,10 @@ body {
   line-height: 20px;
 }
 
+ul,
+li {
+  list-style: none;
+}
 /*stickey nav*/
 
 .bg-transparent {
@@ -767,12 +771,13 @@ body {
   text-align: center;
 }
 
-.send-button .btn.btn-primary {
+.send-button .btn.btn-primary,
+.send-button .btn.btn-primary:active {
   margin-top: 15px;
   background: #ff4545;
-  border-color: #ff4545;
   padding: 5px 20px;
-  text-transform: uppercase;
+  outline: none;
+  border: none;
 }
 
 /*section-8 end*/
@@ -1031,4 +1036,21 @@ body {
   .gallery-overflow-xs {
     overflow: hidden;
   }
+}
+
+.music {
+  position: fixed;
+  top: 70px;
+  left: 20px;
+  width: 64px;
+  height: 64px;
+  cursor: pointer;
+}
+.music.rotate {
+  animation: changeRight 3s linear infinite;
+  -webkit-animation: changeRight 3s linear infinite;
+}
+.music img {
+  width: 100%;
+  display: block;
 }
