@@ -488,6 +488,10 @@
 					</div>
 				</div>
 
+
+			</div>
+			<div class="row">
+				<div id="map" style="width: 100%;height: 500px;margin-top: 40px;"></div>
 			</div>
 
 
@@ -576,6 +580,7 @@
 
 	<!-- Optional JavaScript -->
 	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+	<!-- <script src="http://api.map.baidu.com/api?v=2.0&ak=uRbq1N0CONshk5O4g6xTNZ2GoxuXX4uN"></script> -->
 	<script src="js/jquery-3.3.1.min.js"></script>
 	<script src="js/popper.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
@@ -587,6 +592,54 @@
 	<script src="js/jquery.fancybox.js"></script>
 	<script src="js/owl.carousel.js"></script>
 
+	<script type="text/javascript">  
+		function initialize() {  
+			var map = new BMap.Map('map');  
+			map.enableScrollWheelZoom(true); // 开启鼠标滚轮缩放
+			var point = new BMap.Point(116.404, 39.915);
+        //创建地址解析器实例
+        var myGeo = new BMap.Geocoder();
+        // 将地址解析结果显示在地图上，并调整地图视野
+        myGeo.getPoint('四川省广元市苍溪县国际大酒店', function(point){
+            if(point){
+							map.centerAndZoom(point, 16);
+							// 创建图标
+							var myIcon = new BMap.Icon("./img/favicon.png", new BMap.Size(32, 32));
+							// 创建Marker标注，使用图标
+							var marker = new BMap.Marker(point, {
+									icon: myIcon,
+							});
+							// 将标注添加到地图
+							map.addOverlay(marker);
+
+
+							var opts = {
+									position: point, // 指定文本标注所在的地理位置
+									offset: new BMap.Size(30, -30) // 设置文本偏移量
+							};
+							// 创建文本标注对象
+							var label = new BMap.Label('四川省广元市苍溪县滨江路328号', opts);
+							// 自定义文本标注样式
+							label.setStyle({
+									color: 'red',
+									borderRadius: '5px',
+									borderColor: '#ccc',
+									padding: '10px',
+									fontSize: '16px',
+									height: '40px',
+							});
+							map.addOverlay(label);
+            }
+        })
+		}  
+		function loadScript() {  
+			var script = document.createElement("script");  
+			script.src = "http://api.map.baidu.com/api?v=2.0&ak=uRbq1N0CONshk5O4g6xTNZ2GoxuXX4uN&callback=initialize";
+			document.body.appendChild(script);  
+		}  
+		window.onload = loadScript;  
+		</script> 
+
 
 	<!-- stickey nav -->
 	<script>
@@ -596,7 +649,6 @@
 			} else {
 				$(".navbar").removeClass("bg-transparent")
 			}
-
 		})
 	</script>
 	<!-- stickey nav end -->
@@ -604,17 +656,14 @@
 
 
 	<!--wow js-->
-
 	<script src="js/wow.min.js"></script>
 	<script>
 		new WOW().init();
 	</script>
-
 	<!--wow js end-->
 
 
 	<!--owl carasol-->
-
 	<script>
 		$('.owl-carousel').owlCarousel({
 			autoplay: true,
@@ -638,30 +687,22 @@
 	</script>
 	<!--owl carasol end-->
 
-
-
-
-
 	<!-- smooth scroll -->
 	<script>
 		$(document).ready(function () {
 			// Add smooth scrolling to all links
 			$("a").on('click', function (event) {
-
 				// Make sure this.hash has a value before overriding default behavior
 				if (this.hash !== "") {
 					// Prevent default anchor click behavior
 					event.preventDefault();
-
 					// Store hash
 					var hash = this.hash;
-
 					// Using jQuery's animate() method to add smooth page scroll
 					// The optional number (800) specifies the number of milliseconds it takes to scroll to the specified area
 					$('html, body').animate({
 						scrollTop: $(hash).offset().top
 					}, 800, function () {
-
 						// Add hash (#) to URL when done scrolling (default click behavior)
 						window.location.hash = hash;
 					});
@@ -671,7 +712,6 @@
 	</script>
 
 	<!--smooth scroll end-->
-
 	<script>
 		function countdown() {
 			var launchday = new Date("2021/05/20 12:00:00");
